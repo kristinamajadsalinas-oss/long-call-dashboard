@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Icon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background: #F8F9FA;
+    }
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .icon-wrapper {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #E9ECEF;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto 10px;
+    }
+    button {
+      background-color: #D71921;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    button:hover {
+      background-color: #B8151C;
+    }
+    .instructions {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #E9ECEF;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color: #212529; font-weight: 500;">Minimal Icon Generator</h1>
+  <p style="color: #6C757D;">Simple solid color icons for Long Call Update extension</p>
+
+  <button onclick="generateIcons()">Generate Icons</button>
+
+  <div class="icons" id="iconsContainer"></div>
+
+  <div class="instructions">
+    <h3 style="color: #212529;">Instructions:</h3>
+    <ol style="color: #495057; line-height: 1.8;">
+      <li>Click "Generate Icons" button above</li>
+      <li>Right-click on each icon and select "Save image as..."</li>
+      <li>Save as: <code>icon16.png</code>, <code>icon24.png</code>, <code>icon32.png</code>, <code>icon48.png</code>, <code>icon128.png</code></li>
+      <li>Replace the existing icons in the <code>icons/</code> directory</li>
+    </ol>
+  </div>
+
+  <script>
+    function generateIcons() {
+      const sizes = [16, 24, 32, 48, 128];
+      const container = document.getElementById('iconsContainer');
+      container.innerHTML = '';
+
+      sizes.forEach(size => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'icon-wrapper';
+
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Solid Trend Micro Red background
+        ctx.fillStyle = '#D71921';
+        ctx.fillRect(0, 0, size, size);
+
+        // Rounded corners
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.beginPath();
+        const radius = size * 0.2;
+        ctx.roundRect(0, 0, size, size, radius);
+        ctx.fill();
+
+        ctx.globalCompositeOperation = 'source-over';
+
+        // Minimal white icon - just "22" text or simple symbol
+        ctx.fillStyle = 'white';
+
+        if (size >= 32) {
+          // Show "22" for larger icons
+          ctx.font = `bold ${size * 0.5}px Arial`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('22', size / 2, size / 2);
+        } else {
+          // For small icons, just a simple dot/circle
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size * 0.25, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        const label = document.createElement('p');
+        label.textContent = `icon${size}.png`;
+        label.style.color = '#6C757D';
+        label.style.fontSize = '12px';
+        label.style.margin = '10px 0 0 0';
+
+        wrapper.appendChild(canvas);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+      });
+    }
+
+    // Auto-generate on page load
+    window.onload = generateIcons;
+  </script>
+</body>
+</html>

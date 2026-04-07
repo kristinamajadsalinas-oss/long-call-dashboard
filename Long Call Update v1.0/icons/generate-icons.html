@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      margin: 10px;
+    }
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .icon-wrapper {
+      text-align: center;
+    }
+    button {
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    .instructions {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Extension Icon Generator</h1>
+
+  <div class="instructions">
+    <h3>Instructions:</h3>
+    <ol>
+      <li>Click "Generate Icons" button below</li>
+      <li>Right-click on each icon and select "Save image as..."</li>
+      <li>Save them as: <code>icon16.png</code>, <code>icon48.png</code>, and <code>icon128.png</code></li>
+      <li>Save all icons in the <code>icons/</code> directory</li>
+    </ol>
+  </div>
+
+  <button onclick="generateIcons()">Generate Icons</button>
+
+  <div class="icons" id="iconsContainer"></div>
+
+  <script>
+    function generateIcons() {
+      const sizes = [16, 24, 32, 48, 128];
+      const container = document.getElementById('iconsContainer');
+      container.innerHTML = '';
+
+      sizes.forEach(size => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'icon-wrapper';
+
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Solid background (Trend Micro Red - flat, no gradient)
+        ctx.fillStyle = '#D71921';
+        ctx.fillRect(0, 0, size, size);
+
+        // Rounded corners
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.beginPath();
+        const radius = size * 0.22;
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(size - radius, 0);
+        ctx.quadraticCurveTo(size, 0, size, radius);
+        ctx.lineTo(size, size - radius);
+        ctx.quadraticCurveTo(size, size, size - radius, size);
+        ctx.lineTo(radius, size);
+        ctx.quadraticCurveTo(0, size, 0, size - radius);
+        ctx.lineTo(0, radius);
+        ctx.quadraticCurveTo(0, 0, radius, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.globalCompositeOperation = 'source-over';
+
+        // Simple minimal phone icon (solid white, very simple)
+        const centerX = size / 2;
+        const centerY = size / 2;
+        const iconSize = size * 0.5;
+
+        ctx.fillStyle = 'white';
+
+        // Simple phone shape - just a rounded rectangle with a notch
+        const phoneW = iconSize * 0.6;
+        const phoneH = iconSize;
+        const phoneX = centerX - phoneW / 2;
+        const phoneY = centerY - phoneH / 2;
+        const corner = phoneW * 0.15;
+
+        ctx.beginPath();
+        ctx.moveTo(phoneX + corner, phoneY);
+        ctx.lineTo(phoneX + phoneW - corner, phoneY);
+        ctx.quadraticCurveTo(phoneX + phoneW, phoneY, phoneX + phoneW, phoneY + corner);
+        ctx.lineTo(phoneX + phoneW, phoneY + phoneH - corner);
+        ctx.quadraticCurveTo(phoneX + phoneW, phoneY + phoneH, phoneX + phoneW - corner, phoneY + phoneH);
+        ctx.lineTo(phoneX + corner, phoneY + phoneH);
+        ctx.quadraticCurveTo(phoneX, phoneY + phoneH, phoneX, phoneY + phoneH - corner);
+        ctx.lineTo(phoneX, phoneY + corner);
+        ctx.quadraticCurveTo(phoneX, phoneY, phoneX + corner, phoneY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Small notch at top (speaker)
+        ctx.fillStyle = '#D71921';
+        ctx.fillRect(
+          centerX - iconSize * 0.15,
+          phoneY + iconSize * 0.08,
+          iconSize * 0.3,
+          iconSize * 0.04
+        );
+
+        const label = document.createElement('p');
+        label.textContent = `icon${size}.png (${size}x${size})`;
+
+        wrapper.appendChild(canvas);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+      });
+    }
+
+    // Auto-generate on page load
+    window.onload = generateIcons;
+  </script>
+</body>
+</html>

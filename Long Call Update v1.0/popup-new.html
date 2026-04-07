@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Long Call Update</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      background: #FFFFFF;
+      color: #212529;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    /* Status Indicator */
+    .status-indicator {
+      padding: 10px 14px;
+      background: #F8F9FA;
+      border: 1px solid #E9ECEF;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #6C757D;
+      text-align: center;
+    }
+
+    .status-indicator.active {
+      background: #FFFFFF;
+      border-color: #D71921;
+      color: #212529;
+      font-weight: 500;
+    }
+
+    /* Simple message */
+    .message {
+      padding: 12px;
+      background: #F8F9FA;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #495057;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6C757D;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    /* Form field */
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6C757D;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #DEE2E6;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFFFFF;
+      color: #212529;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #ADB5BD;
+      box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+    }
+
+    input::placeholder {
+      color: #ADB5BD;
+    }
+
+    .field-value {
+      padding: 10px 12px;
+      background: #F8F9FA;
+      border: 1px solid #E9ECEF;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #212529;
+    }
+
+    /* Template section */
+    .template-header {
+      font-size: 16px;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #E9ECEF;
+    }
+
+    .template-preview {
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      background: #F8F9FA;
+      padding: 14px;
+      border: 1px solid #E9ECEF;
+      border-radius: 6px;
+      color: #212529;
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #D71921;
+      color: white;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: #B8151C;
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      color: #6C757D;
+      border: 1px solid #DEE2E6;
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background: #F8F9FA;
+      color: #495057;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #DEE2E6;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFFFFF;
+      color: #212529;
+      resize: vertical;
+      min-height: 60px;
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #ADB5BD;
+      box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Status Indicator -->
+    <div class="status-indicator" id="statusIndicator">
+      Monitoring for calls...
+    </div>
+
+    <!-- Simple Message -->
+    <div class="message" id="simpleMessage">
+      A template will appear here once you answer a call and will notify you when you need to update on Teams.
+    </div>
+
+    <!-- Engineer's Info -->
+    <div class="section">
+      <div class="section-title">Engineer's Info</div>
+
+      <div class="field">
+        <label class="field-label" for="siebelId">Siebel ID</label>
+        <input type="text" id="siebelId" placeholder="Enter your SIEBEL ID">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="squad">Squad</label>
+        <input type="text" id="squad" placeholder="Enter your SQL's name">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="skillset">Skillset</label>
+        <select id="skillset">
+          <option value="">Select skillset</option>
+          <option value="PS">PS (Premium)</option>
+          <option value="STD">STD (Standard)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Template Section (hidden until call active) -->
+    <div class="section" id="templateSection">
+      <div class="template-header">LONG CALL UPDATE</div>
+
+      <div class="field">
+        <label class="field-label" for="transactionId">Transaction ID</label>
+        <input type="text" id="transactionId" placeholder="Auto-filled from call" readonly>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Siebel ID</label>
+        <div class="field-value" id="displaySiebelId">-</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Skillset</label>
+        <div class="field-value" id="displaySkillset">-</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Squad</label>
+        <div class="field-value" id="displaySquad">-</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Issue *</label>
+        <textarea id="issue" placeholder="Describe the issue that caused the long call..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Reason *</label>
+        <textarea id="reason" placeholder="Explain the reason for the extended duration..."></textarea>
+      </div>
+
+      <div class="template-preview" id="preview"></div>
+
+      <div class="button-group">
+        <button class="btn-primary" id="copyBtn">Copy Template</button>
+      </div>
+    </div>
+
+    <!-- Save Button (for settings) -->
+    <div class="section" id="saveSection">
+      <button class="btn-secondary" id="saveBtn">Save Settings</button>
+    </div>
+  </div>
+
+  <script src="popup-new.js"></script>
+</body>
+</html>
