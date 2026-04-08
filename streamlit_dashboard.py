@@ -119,7 +119,6 @@ def init_firebase():
     return firestore.client()
 
 # Get data from Firestore
-@st.cache_data(ttl=5)  # Cache for 5 seconds for "real-time" updates
 def get_updates(db, squad_filter=None, date_filter=None):
     """Fetch long call updates from Firestore"""
     try:
