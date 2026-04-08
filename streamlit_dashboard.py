@@ -145,12 +145,15 @@ def get_updates(db, squad_filter=None, date_filter=None):
                 df['timestamp'] = pd.to_datetime(df['timestamp'])
                 df = df.sort_values('timestamp', ascending=False)
 
-            # Apply filters
+                      # Apply filters
             if squad_filter and squad_filter != "All":
                 df = df[df['squad'] == squad_filter]
 
-            if date_filter:
-                today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+            if date_filter and date_filter != "All Time":
+                # Make datetime timezone-aware to match pandas datetime64
+                from datetime import timezone
+                today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+
                 if date_filter == "Today":
                     df = df[df['timestamp'] >= today]
                 elif date_filter == "Yesterday":
@@ -159,6 +162,9 @@ def get_updates(db, squad_filter=None, date_filter=None):
                 elif date_filter == "Last 7 Days":
                     week_ago = today - timedelta(days=7)
                     df = df[df['timestamp'] >= week_ago]
+                elif date_filter == "Last 30 Days":
+                    month_ago = today - timedelta(days=30)
+                    df = df[df['timestamp'] >= month_ago]
 
             return df
 
