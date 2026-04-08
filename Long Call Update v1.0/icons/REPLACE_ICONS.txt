@@ -1,0 +1,52 @@
+HOW TO REPLACE ICONS WITH NEW TRENDLIFE LOGO
+================================================
+
+The source logo has been saved to:
+/home/kristinamajasa/Long Call Update v1.0/icons/trendlife-source.png
+
+MANUAL METHOD (Easiest):
+========================
+
+1. Open the source image:
+   C:\Users\kristinamajas\Downloads\Designer (2).png
+
+2. Use an image editor (Paint, Photoshop, GIMP, or online tool like:
+   https://www.iloveimg.com/resize-image
+   or
+   https://www.resizeimage.net/)
+
+3. Create 5 versions at these exact sizes:
+   - 16x16 pixels  → Save as: icon16.png
+   - 24x24 pixels  → Save as: icon24.png
+   - 32x32 pixels  → Save as: icon32.png
+   - 48x48 pixels  → Save as: icon48.png
+   - 128x128 pixels → Save as: icon128.png
+
+4. Save all 5 files to this folder:
+   /home/kristinamajasa/Long Call Update v1.0/icons/
+
+5. Replace the existing old icons (overwrite them)
+
+6. Reload the extension:
+   - Open: chrome://extensions
+   - Find: Long Call Update Assistant
+   - Click: Reload button
+
+DONE! The new TrendLife icons will appear in Chrome toolbar.
+
+KEY POINTS:
+===========
+- Keep the EXACT logo from Designer (2).png
+- Gray gradient background is already in the image
+- Background has soft rounded corners
+- Just resize to different sizes
+- Must be PNG format
+- Must be exact sizes (16, 24, 32, 48, 128)
+
+The logo already has:
+✓ Gray gradient background
+✓ Soft rounded corners
+✓ Red TrendLife interlocking design
+✓ Correct colors
+
+Just resize it to the 5 sizes needed!

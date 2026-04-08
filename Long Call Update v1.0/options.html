@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Long Call Update - Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      width: 600px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .settings-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #D71921;
+    }
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    input[type="radio"] {
+      cursor: pointer;
+    }
+    .radio-option label {
+      margin: 0;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    .button-group {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-primary {
+      background-color: #D71921;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #A01015;
+    }
+    .btn-secondary {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+    }
+    .status-message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .status-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .status-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .test-mode {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+    }
+    .test-mode h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #856404;
+    }
+    .test-mode-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <h1>Long Call Update Settings</h1>
+    <p class="subtitle">Configure your engineer details for auto-population</p>
+
+    <form id="settingsForm">
+      <div class="form-group">
+        <label for="siebelId">SIEBEL ID</label>
+        <input type="text" id="siebelId" name="siebelId" required placeholder="e.g., kristinamajasa">
+      </div>
+
+      <div class="form-group">
+        <label for="team">TEAM</label>
+        <input type="text" id="team" name="team" required placeholder="Squad *team name*">
+      </div>
+
+      <div class="form-group">
+        <label>Default SKILLSET</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" id="skillsetPS" name="skillset" value="PS" checked>
+            <label for="skillsetPS">PS (Premium)</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="skillsetSTD" name="skillset" value="STD">
+            <label for="skillsetSTD">STD (Standard)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-mode">
+        <h3>Developer Mode</h3>
+        <div class="test-mode-option">
+          <input type="checkbox" id="testMode" name="testMode">
+          <label for="testMode">Enable test mode (1-minute timer instead of 22 minutes)</label>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-primary">Save Settings</button>
+        <button type="button" id="resetBtn" class="btn-secondary">Reset to Defaults</button>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+    </form>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
