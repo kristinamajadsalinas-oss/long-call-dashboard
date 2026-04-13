@@ -225,10 +225,10 @@ def main():
         with col3:
             # Count how many calls might still be active (within last hour)
             from datetime import timezone
-now_utc = datetime.now(timezone.utc)
-one_hour_ago = now_utc - timedelta(hours=1)
-recent = df[df['timestamp'] > one_hour_ago] if 'timestamp' in df.columns else df
-st.metric("Recent (1hr)", len(recent))
+            now_utc = datetime.now(timezone.utc)
+            one_hour_ago = now_utc - timedelta(hours=1)
+            recent = df[df['timestamp'] > one_hour_ago] if 'timestamp' in df.columns else df
+            st.metric("Recent (1hr)", len(recent))
 
         with col4:
             # Average call duration (if available)
