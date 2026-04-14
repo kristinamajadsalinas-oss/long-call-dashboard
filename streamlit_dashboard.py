@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import pytz
 import hashlib
+import time
 
 # Page configuration
 st.set_page_config(
