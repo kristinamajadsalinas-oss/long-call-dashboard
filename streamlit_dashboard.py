@@ -158,12 +158,9 @@ def get_updates():
 
         # Convert timestamp to datetime if it exists
         if 'timestamp' in df.columns:
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
-            # Convert to Manila timezone
-            # Handle both timezone-aware and naive timestamps
-        if df['timestamp'].dt.tz is None:
-            df['timestamp'] = df['timestamp'].dt.tz_localize('UTC').tz_convert(MANILA_TZ)
-        else:
+            # Force all timestamps to UTC first (handles mixed timezones)
+            df['timestamp'] = pd.to_datetime(df['timestamp'], utc=True)
+            # Then convert to Manila timezone
             df['timestamp'] = df['timestamp'].dt.tz_convert(MANILA_TZ)
 
         # Sort by timestamp descending (newest first)
