@@ -162,7 +162,7 @@ def get_updates():
             # Convert to Manila timezone
             # Handle both timezone-aware and naive timestamps
         if df['timestamp'].dt.tz is None:
-            df['timestamp'] = df['timestamp'].dt.tz_localize('UTC').tz_convert(MANILA_TZ)
+        df['timestamp'] = df['timestamp'].dt.tz_localize('UTC').tz_convert(MANILA_TZ)
         else:
         df['timestamp'] = df['timestamp'].dt.tz_convert(MANILA_TZ)
 
